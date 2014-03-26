@@ -1,0 +1,22 @@
+print "Starting maya loading and fbx conversion \n";
+			
+if (`file -q -exists "C:/Users/ROHAL/Desktop/SKYBOX~1/Assets/Meshes/ROOM_C~1.MB"`)
+{
+	file -o "C:/Users/ROHAL/Desktop/SKYBOX~1/Assets/Meshes/ROOM_C~1.MB";
+	FBXExportEmbeddedTextures -v false;
+	// FBXExportHardEdges -v true;
+	FBXExportApplyConstantKeyReducer -v false;
+	FBXExportShowUI -v false;
+
+	print "Before fbx export\n";
+	FBXExport -f "C:/Users/ROHAL/Desktop/SKYBOX~1/Temp/ExportedFBXFile.fbx";
+	print "after fbx export\n";
+}
+else
+	print "Could not open Maya file.";
+
+system ("del \"C:\\Users\\ROHAL\\Desktop\\SKYBOX~1\\Temp\\CommandPipe\"");
+
+$donepipeKill = `fopen "C:/Users/ROHAL/Desktop/SKYBOX~1/Temp/SyncPipeKill" "w"`;
+fwrite $donepipeKill "Done";
+fclose $donepipeKill;
